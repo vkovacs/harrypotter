@@ -1,4 +1,3 @@
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,5 +10,10 @@ public class HarryPotterTest {
     @Test
     public void testOneBook() {
         Assert.assertEquals(8, HarryPotter.calculatePrice(new int[] { 1 }), 0);
+    }
+
+    @Test
+    public void testTwoDifferentBooks() {
+        Assert.assertEquals(2 * 8 * 0.95, HarryPotter.calculatePrice(new int[] { 1, 1 }), 0);
     }
 }
