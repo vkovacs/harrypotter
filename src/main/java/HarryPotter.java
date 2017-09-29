@@ -16,11 +16,23 @@ public class HarryPotter {
     }
 
     private static double calculatePriceWithDiscount(int[] bookPairsCount) {
-        return bookPairsCount[0] * BOOK_PRICE
-                + bookPairsCount[1] * 2 * BOOK_PRICE * 0.95
-                + bookPairsCount[2] * 3 * BOOK_PRICE * 0.9
-                + bookPairsCount[3] * 4 * BOOK_PRICE * 0.8
-                + bookPairsCount[4] * 5 * BOOK_PRICE * 0.75;
+        int[] weightedBookPairsCount = weightBookPairsCount(bookPairsCount);
+
+        return weightedBookPairsCount[0] * BOOK_PRICE
+                + weightedBookPairsCount[1] * 2 * BOOK_PRICE * 0.95
+                + weightedBookPairsCount[2] * 3 * BOOK_PRICE * 0.9
+                + weightedBookPairsCount[3] * 4 * BOOK_PRICE * 0.8
+                + weightedBookPairsCount[4] * 5 * BOOK_PRICE * 0.75;
+    }
+
+    private static int[] weightBookPairsCount(int[] bookPairsCount) {
+        int[] weightedBookPairsCount = Arrays.copyOf(bookPairsCount, bookPairsCount.length);
+        while (weightedBookPairsCount[2] > 0 && weightedBookPairsCount[4] > 0) {
+            weightedBookPairsCount[2] -= 1;
+            weightedBookPairsCount[4] -= 1;
+            weightedBookPairsCount[3] += 2;
+        }
+        return weightedBookPairsCount;
     }
 
     private static int differentBookCounter(int[] bookCountByBookType) {
