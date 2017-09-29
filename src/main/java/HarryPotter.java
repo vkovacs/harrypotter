@@ -1,33 +1,42 @@
-import java.util.List;
+import java.util.Arrays;
 
 public class HarryPotter {
-    public static double calculatePrice(List<Integer> books) {
+    private static final int BOOK_PRICE = 8;
 
-        int differentBookCount = books.size();
+    public static double calculatePrice(int[] bookCountByBookType) {
+        int[] bookPairsCount = new int[5];
 
-        double basePrice = differentBookCount * 8;
-        double sum = 0;
-
-        int allBookCount = books.stream().
-                filter(i -> i > 0)
-                .mapToInt(Integer::intValue)
-                .sum();
-
-        while (allBookCount > 0) {
-            if (differentBookCount == 1) {
-                sum += basePrice;
-            } else if (differentBookCount == 2) {
-                sum += basePrice * 0.95;
-            }
-
-            for (int i = 0; i < differentBookCount; i++) {
-                if (books.get(i) == 1) {
-                    books.remove(i);
-                } else {
-                    books.set(i, books.get(i) - 1);
-                }
-            }
+        int differentBookCount = differentBookCounter(bookCountByBookType);
+        while (differentBookCount > 0) {
+            bookPairsCount[differentBookCount - 1]++;
+            bookCountByBookType = fall(bookCountByBookType);
+            differentBookCount = differentBookCounter(bookCountByBookType);
         }
-        return sum;
+        return calculatePriceWithDiscount(bookPairsCount);
+    }
+
+    private static double calculatePriceWithDiscount(int[] bookPairsCount) {
+        return bookPairsCount[0] * BOOK_PRICE
+                + bookPairsCount[1] * 2 * BOOK_PRICE * 0.95
+                + bookPairsCount[2] * 3 * BOOK_PRICE * 0.9
+                + bookPairsCount[3] * 4 * BOOK_PRICE * 0.8
+                + bookPairsCount[4] * 5 * BOOK_PRICE * 0.75;
+    }
+
+    private static int differentBookCounter(int[] bookCountByBookType) {
+        return (int) Arrays.stream(bookCountByBookType)
+                .filter(c -> c > 0)
+                .count();
+
+    }
+
+    //imagine books of similar types as balls in tubes. This function make the bottom line balls removed -> upper balls are falling down one level
+    private static int[] fall(int[] bookCountByBookType) {
+        int[] decreased = new int[bookCountByBookType.length];
+
+        for (int i = 0; i < bookCountByBookType.length - 1; i++) {
+            decreased[i] = --bookCountByBookType[i];
+        }
+        return decreased;
     }
 }
