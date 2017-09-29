@@ -29,7 +29,7 @@ public class HarryPotterTest {
 
     @Test
     public void testTrickyList2() {
-        Assert.assertEquals(5 * 8 * 0.75 + 2 * 8 * 0.95, HarryPotter.calculatePrice(new int[]{2, 2, 2, 1, 1}), 0);
+        Assert.assertEquals(5 * 8 * 0.75 + 2 * 8 * 0.95, HarryPotter.calculatePrice(new int[]{2, 2, 1, 1, 1}), 0);
     }
 
 }
