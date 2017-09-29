@@ -21,4 +21,15 @@ public class HarryPotterTest {
     public void testTwoDifferentBooksAndOneSimilar() {
         Assert.assertEquals(2 * 8 * 0.95 + 8, HarryPotter.calculatePrice(new int[]{2, 1}), 0);
     }
+
+    @Test
+    public void testTrickyList() {
+        Assert.assertEquals(8 * 4 * 0.8 + 8 * 4 * 0.8, HarryPotter.calculatePrice(new int[]{2, 2, 2, 1, 1}), 0);
+    }
+
+    @Test
+    public void testTrickyList2() {
+        Assert.assertEquals(5 * 8 * 0.75 + 2 * 8 * 0.95, HarryPotter.calculatePrice(new int[]{2, 2, 2, 1, 1}), 0);
+    }
+
 }
