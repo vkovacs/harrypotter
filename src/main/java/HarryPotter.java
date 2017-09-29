@@ -1,19 +1,26 @@
 import java.util.Arrays;
 
-public class HarryPotter {
+/**
+ * Imagine similar type of books as balls in separate vertical tubes.
+ * First we register the quantity of the bottom line of balls and then remove them.
+ * We do this until we run out of balls.
+ * When we have the discounts chosen by the greedy algorithm above, we weight it by using creating discounts of 4 different types of books instead of discounts of 5 or 3 different kind of books
+ * Calculate the price by using these discounts
+ * */
+class HarryPotter {
     private static final int BOOK_PRICE = 8;
 
-    public static double calculatePrice(int[] bookCountByBookType) {
-        int[] bookPairsCount = new int[5];
+    static double calculatePrice(int[] bookCountByBookType) {
+        int[] discountTypeCount = new int[5];
 
-        int differentBookTypeCount = countDifferentBookTypes(bookCountByBookType);
-        while (differentBookTypeCount > 0) {
-            bookPairsCount[differentBookTypeCount - 1]++;
+        int differentBookTypesCountInBottomRow = countDifferentBookTypes(bookCountByBookType);
+        while (differentBookTypesCountInBottomRow > 0) {
+            discountTypeCount[differentBookTypesCountInBottomRow - 1]++;
             bookCountByBookType = fall(bookCountByBookType);
-            differentBookTypeCount = countDifferentBookTypes(bookCountByBookType);
+            differentBookTypesCountInBottomRow = countDifferentBookTypes(bookCountByBookType);
         }
-        int[] weightedBookPairsCount = weightBookPairsCount(bookPairsCount);
-        return calculatePriceWithDiscount(weightedBookPairsCount);
+        int[] weightedDiscountTypesCount = weightDiscountTypesCount(discountTypeCount);
+        return calculatePriceWithDiscount(weightedDiscountTypesCount);
     }
 
     private static double calculatePriceWithDiscount(int[] weightedBookPairsCount) {
@@ -24,7 +31,7 @@ public class HarryPotter {
                 + weightedBookPairsCount[4] * 5 * BOOK_PRICE * 0.75;
     }
 
-    private static int[] weightBookPairsCount(int[] bookPairsCount) {
+    private static int[] weightDiscountTypesCount(int[] bookPairsCount) {
         int[] weightedBookPairsCount = Arrays.copyOf(bookPairsCount, bookPairsCount.length);
         while (weightedBookPairsCount[2] > 0 && weightedBookPairsCount[4] > 0) {
             weightedBookPairsCount[2] -= 1;
@@ -40,7 +47,6 @@ public class HarryPotter {
                 .count();
     }
 
-    //imagine books of similar types as balls in tubes. This function make the bottom line balls removed -> upper balls are falling down one level
     private static int[] fall(int[] bookCountByBookType) {
         return Arrays.stream(bookCountByBookType)
                 .map(c -> c - 1)
