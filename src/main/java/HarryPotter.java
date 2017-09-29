@@ -42,11 +42,8 @@ public class HarryPotter {
 
     //imagine books of similar types as balls in tubes. This function make the bottom line balls removed -> upper balls are falling down one level
     private static int[] fall(int[] bookCountByBookType) {
-        int[] fallen = new int[bookCountByBookType.length];
-
-        for (int i = 0; i < bookCountByBookType.length - 1; i++) {
-            fallen[i] = --bookCountByBookType[i];
-        }
-        return fallen;
+        return Arrays.stream(bookCountByBookType)
+                .map(c -> c - 1)
+                .toArray();
     }
 }
