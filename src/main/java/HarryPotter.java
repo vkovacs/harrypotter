@@ -6,18 +6,17 @@ public class HarryPotter {
     public static double calculatePrice(int[] bookCountByBookType) {
         int[] bookPairsCount = new int[5];
 
-        int differentBookCount = differentBookCounter(bookCountByBookType);
-        while (differentBookCount > 0) {
-            bookPairsCount[differentBookCount - 1]++;
+        int differentBookTypeCount = countDifferentBookTypes(bookCountByBookType);
+        while (differentBookTypeCount > 0) {
+            bookPairsCount[differentBookTypeCount - 1]++;
             bookCountByBookType = fall(bookCountByBookType);
-            differentBookCount = differentBookCounter(bookCountByBookType);
+            differentBookTypeCount = countDifferentBookTypes(bookCountByBookType);
         }
-        return calculatePriceWithDiscount(bookPairsCount);
+        int[] weightedBookPairsCount = weightBookPairsCount(bookPairsCount);
+        return calculatePriceWithDiscount(weightedBookPairsCount);
     }
 
-    private static double calculatePriceWithDiscount(int[] bookPairsCount) {
-        int[] weightedBookPairsCount = weightBookPairsCount(bookPairsCount);
-
+    private static double calculatePriceWithDiscount(int[] weightedBookPairsCount) {
         return weightedBookPairsCount[0] * BOOK_PRICE
                 + weightedBookPairsCount[1] * 2 * BOOK_PRICE * 0.95
                 + weightedBookPairsCount[2] * 3 * BOOK_PRICE * 0.9
@@ -35,20 +34,19 @@ public class HarryPotter {
         return weightedBookPairsCount;
     }
 
-    private static int differentBookCounter(int[] bookCountByBookType) {
+    private static int countDifferentBookTypes(int[] bookCountByBookType) {
         return (int) Arrays.stream(bookCountByBookType)
                 .filter(c -> c > 0)
                 .count();
-
     }
 
     //imagine books of similar types as balls in tubes. This function make the bottom line balls removed -> upper balls are falling down one level
     private static int[] fall(int[] bookCountByBookType) {
-        int[] decreased = new int[bookCountByBookType.length];
+        int[] fallen = new int[bookCountByBookType.length];
 
         for (int i = 0; i < bookCountByBookType.length - 1; i++) {
-            decreased[i] = --bookCountByBookType[i];
+            fallen[i] = --bookCountByBookType[i];
         }
-        return decreased;
+        return fallen;
     }
 }
