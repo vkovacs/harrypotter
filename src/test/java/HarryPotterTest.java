@@ -5,11 +5,11 @@ import org.junit.Test;
 public class HarryPotterTest {
     @Test
     public void testNoBooks() {
-        Assert.assertEquals(0, HarryPotter.calculatePrice(List.of()), 0);
+        Assert.assertEquals(0, HarryPotter.calculatePrice(new int[0]), 0);
     }
 
     @Test
     public void testOneBook() {
-        Assert.assertEquals(8, HarryPotter.calculatePrice(List.of(1)), 0);
+        Assert.assertEquals(8, HarryPotter.calculatePrice(new int[] { 1 }), 0);
     }
 }
