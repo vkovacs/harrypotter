@@ -16,4 +16,9 @@ public class HarryPotterTest {
     public void testTwoDifferentBooks() {
         Assert.assertEquals(2 * 8 * 0.95, HarryPotter.calculatePrice(new int[] { 1, 1 }), 0);
     }
+
+    @Test
+    public void testTwoDifferentBooksAndOneSimilar() {
+        Assert.assertEquals(2 * 8 * 0.95 + 8, HarryPotter.calculatePrice(new int[] { 2, 1 }), 0);
+    }
 }
