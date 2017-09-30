@@ -1,5 +1,7 @@
 # Solution of the Harry Potter kata from http://cyber-dojo.org
 
+![alt text](https://circleci.com/gh/vkovacs/harrypotter.png?circle-token=df964b4827186dcb2d32847e662fc4c3377cb7b6 "CircleCI status")
+
 To try and encourage more sales of the 5 different Harry
 Potter books they sell, a bookshop has decided to offer 
 discounts of multiple-book purchases. 
